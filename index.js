@@ -10,10 +10,12 @@ app.get("/", (req, res) => {
 });
 
 app.get("/catalog/search/:topic", (req, res) => {
+  console.log("hello");
   db.all(
     "select id, title from book where topic = ?",
     [req.params.topic],
     (err, rows) => {
+      console.log(rows, err);
       if (err) {
         res.status(400).send("Bad Request");
         return;
