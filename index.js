@@ -42,3 +42,18 @@ app.get("/catalog/info/:id", (req, res) => {
     }
   );
 });
+
+app.put("/catalog/update/:id", (req, res) => {
+  db.run(
+    "update book set quantity = quantity - 1 where id = ?",
+    [req.params.id],
+    (err) => {
+      if (err) {
+        res
+          .status(404)
+          .send("something went wrong while updating book quantity");
+      }
+      res.status(200).send("bought book");
+    }
+  );
+});
