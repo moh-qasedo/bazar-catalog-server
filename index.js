@@ -6,7 +6,7 @@ const app = express();
 app.listen(3000, () => console.log("Listening on port 3000..."));
 
 app.get("/", (req, res) => {
-  res.send("hello world from Bazar.com");
+  res.send("This is the Catalog Server of Bazar.com ");
 });
 
 app.get("/catalog/search/:topic", (req, res) => {
