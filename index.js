@@ -10,17 +10,14 @@ app.get("/", (req, res) => {
 });
 
 app.get("/catalog/search/:topic", (req, res) => {
-  console.log("hello");
   db.all(
     "select id, title from book where topic = ?",
     [req.params.topic],
     (err, rows) => {
-      console.log(rows, err);
       if (err) {
         res.status(400).send("Bad Request");
-        return;
       } else if (!rows || rows.length == 0) {
-        res.status(404).send(`Books with topic: ${req.params.topic} Not Found`);
+        res.status(403).send(`Books with topic: ${req.params.topic} Not Found`);
       } else {
         res.status(200).send(JSON.stringify(rows));
       }
@@ -35,9 +32,8 @@ app.get("/catalog/info/:id", (req, res) => {
     (err, row) => {
       if (err) {
         res.status(400).send("Bad Request");
-        return;
       } else if (!row) {
-        res.status(404).send(`Book with id: ${req.params.id} Not Found`);
+        res.status(403).send(`Book with id: ${req.params.id} Not Found`);
       } else {
         res.status(200).send(JSON.stringify(row));
       }
@@ -52,7 +48,7 @@ app.put("/catalog/update/:id", (req, res) => {
     (err) => {
       if (err) {
         res
-          .status(404)
+          .status(403)
           .send("something went wrong while updating book quantity");
       }
       res.status(200).send("bought book");
